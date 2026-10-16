@@ -185,6 +185,23 @@ public protocol PumpManager: DeviceManager {
     ///   - error: An optional error describing why the command failed
     func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval, completion: @escaping (_ error: PumpManagerError?) -> Void)
 
+    /// Whether an on-device algorithm (e.g. Omnipod 5 AID) is actively controlling insulin delivery.
+    /// When true, Loop should not enact automatic temp basals or auto-boluses.
+    /// Default is false for pumps without an on-device algorithm.
+    var isExternalAlgorithmActive: Bool { get }
+
+    /// Forwards the latest glucose reading to the pump for relay to an on-device algorithm.
+    /// Only meaningful when isExternalAlgorithmActive is true.
+    func updateLatestGlucoseForExternalAlgorithm(mgdl: Int, date: Date)
+
+    /// Forwards therapy settings to the pump for on-device algorithm use.
+    /// insulinSensitivities: array of (startTime in seconds from midnight, ISF in mg/dL per U)
+    /// glucoseTargets: array of (startTime in seconds from midnight, target in mg/dL)
+    func updateTherapySettingsForExternalAlgorithm(
+        insulinSensitivities: [(TimeInterval, Double)],
+        glucoseTargets: [(TimeInterval, Double)]
+    )
+
     /// Send a command to the pump to suspend delivery
     ///
     /// - Parameters:
@@ -228,6 +245,13 @@ public protocol PumpManager: DeviceManager {
 
 
 public extension PumpManager {
+    var isExternalAlgorithmActive: Bool { return false }
+    func updateLatestGlucoseForExternalAlgorithm(mgdl: Int, date: Date) { }
+    func updateTherapySettingsForExternalAlgorithm(
+        insulinSensitivities: [(TimeInterval, Double)],
+        glucoseTargets: [(TimeInterval, Double)]
+    ) { }
+
     func roundToSupportedBasalRate(unitsPerHour: Double) -> Double {
         return supportedBasalRates.filter({$0 <= unitsPerHour}).max() ?? 0
     }

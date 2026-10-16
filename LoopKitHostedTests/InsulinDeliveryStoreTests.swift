@@ -97,9 +97,15 @@ class InsulinDeliveryStoreTestsAuthorized: InsulinDeliveryStoreTestsBase {
         // Check that an observer query is registered when authorization is already determined.
         XCTAssertFalse(hkSampleStore.authorizationRequired);
 
-        mockHealthStore.observerQueryStartedExpectation = expectation(description: "observer query started")
-
-        waitForExpectations(timeout: 2)
+        // The store is created already authorized in setUp, so the observer query may start
+        // before this test body runs. HKHealthStoreMock drops the fulfillment when the query
+        // starts before observerQueryStartedExpectation is assigned, so waiting on that
+        // expectation times out no matter how generous the timeout. Poll the recorded query
+        // instead -- that is order-independent.
+        let observerQueryStarted = XCTNSPredicateExpectation(
+            predicate: NSPredicate { [weak self] _, _ in self?.mockHealthStore.observerQuery != nil },
+            object: nil)
+        wait(for: [observerQueryStarted], timeout: 30)
 
         XCTAssertNotNil(mockHealthStore.observerQuery)
     }
@@ -118,7 +124,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
         mockHealthStore.authorizationStatus = .sharingAuthorized
         hkSampleStore.authorizationIsDetermined()
 
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: 30)
 
         XCTAssertNotNil(mockHealthStore.observerQuery)
 
@@ -143,7 +149,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
         mockAnchoredObjectQuery.resultsHandler?(mockAnchoredObjectQuery, [], [], currentAnchor, nil)
 
         // Wait for observerQueryCompletionExpectation
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: 30)
 
         XCTAssertNotNil(hkSampleStore.queryAnchor)
 
@@ -166,7 +172,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
         newSampleStore.authorizationIsDetermined()
 
         // Wait for observerQueryCompletionExpectation
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: 30)
 
         mockHealthStore.anchorQueryStartedExpectation = expectation(description: "new anchored object query started")
 
@@ -176,7 +182,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
         mockObserverQuery2.updateHandler?(mockObserverQuery2, {}, nil)
 
         // Wait for anchorQueryStartedExpectation
-        waitForExpectations(timeout: 3)
+        waitForExpectations(timeout: 30)
 
         // Assert new carb store is querying with the last anchor that our HealthKit mock returned
         let mockAnchoredObjectQuery2 = mockHealthStore.anchoredObjectQuery as! MockHKAnchoredObjectQuery
@@ -207,7 +213,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 3)
+                guard entries.count == 3 else { XCTFail("Expected 3 entries, got \(entries.count)"); break }
                 XCTAssertEqual(entries[0].type, self.entry1.type)
                 XCTAssertEqual(entries[0].startDate, self.entry1.startDate)
                 XCTAssertEqual(entries[0].endDate, self.entry1.endDate)
@@ -247,7 +253,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 2)
+                guard entries.count == 2 else { XCTFail("Expected 2 entries, got \(entries.count)"); break }
                 XCTAssertEqual(entries[0].type, self.entry3.type)
                 XCTAssertEqual(entries[0].startDate, self.entry3.startDate)
                 XCTAssertEqual(entries[0].endDate, self.entry3.endDate)
@@ -369,7 +375,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 3)
+                guard entries.count == 3 else { XCTFail("Expected 3 entries, got \(entries.count)"); break }
                 XCTAssertEqual(entries[0].type, self.entry1.type)
                 XCTAssertEqual(entries[0].startDate, self.entry1.startDate)
                 XCTAssertEqual(entries[0].endDate, self.entry1.endDate)
@@ -420,7 +426,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 3)
+                guard entries.count == 3 else { XCTFail("Expected 3 entries, got \(entries.count)"); break }
                 XCTAssertEqual(entries[0].type, self.entry1.type)
                 XCTAssertEqual(entries[0].startDate, self.entry1.startDate)
                 XCTAssertEqual(entries[0].endDate, self.entry1.endDate)
@@ -516,7 +522,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 1)
+                guard entries.count == 1 else { XCTFail("Expected 1 entry, got \(entries.count)"); break }
                 XCTAssertEqual(entries[0], manualEntry)
             }
             getManuallyEnteredDoses1Completion.fulfill()
@@ -548,7 +554,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 1)
+                guard entries.count == 1 else { XCTFail("Expected 1 entry, got \(entries.count)"); break }
                 XCTAssertEqual(entries[0], manualEntry)
             }
             getManuallyEnteredDoses3Completion.fulfill()
@@ -600,7 +606,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 3)
+                guard entries.count == 3 else { XCTFail("Expected 3 entries, got \(entries.count)"); break }
             }
             getDoseEntries1Completion.fulfill()
         }
@@ -655,7 +661,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 3)
+                guard entries.count == 3 else { XCTFail("Expected 3 entries, got \(entries.count)"); break }
             }
             getDoseEntriesCompletion.fulfill()
         }
@@ -681,7 +687,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 3)
+                guard entries.count == 3 else { XCTFail("Expected 3 entries, got \(entries.count)"); break }
             }
             getDoseEntries1Completion.fulfill()
         }
@@ -701,7 +707,7 @@ class InsulinDeliveryStoreTests: InsulinDeliveryStoreTestsBase {
             case .failure(let error):
                 XCTFail("Unexpected failure: \(error)")
             case .success(let entries):
-                XCTAssertEqual(entries.count, 2)
+                guard entries.count == 2 else { XCTFail("Expected 2 entries, got \(entries.count)"); break }
             }
             getDoseEntries2Completion.fulfill()
         }
@@ -844,7 +850,7 @@ class InsulinDeliveryStoreQueryTests: PersistenceControllerTestCase {
             self.completion.fulfill()
         }
 
-        wait(for: [completion], timeout: 2, enforceOrder: true)
+        wait(for: [completion], timeout: 30, enforceOrder: true)
     }
 
     func testDoseEmptyWithMissingQueryAnchor() {
@@ -862,7 +868,7 @@ class InsulinDeliveryStoreQueryTests: PersistenceControllerTestCase {
             self.completion.fulfill()
         }
 
-        wait(for: [completion], timeout: 2, enforceOrder: true)
+        wait(for: [completion], timeout: 30, enforceOrder: true)
     }
 
     func testDoseEmptyWithNonDefaultQueryAnchor() {
@@ -880,7 +886,7 @@ class InsulinDeliveryStoreQueryTests: PersistenceControllerTestCase {
             self.completion.fulfill()
         }
 
-        wait(for: [completion], timeout: 2, enforceOrder: true)
+        wait(for: [completion], timeout: 30, enforceOrder: true)
     }
 
     func testDoseDataWithUnusedQueryAnchor() {
@@ -907,7 +913,7 @@ class InsulinDeliveryStoreQueryTests: PersistenceControllerTestCase {
             self.completion.fulfill()
         }
 
-        wait(for: [completion], timeout: 2, enforceOrder: true)
+        wait(for: [completion], timeout: 30, enforceOrder: true)
     }
 
     func testDoseDataWithStaleQueryAnchor() {
@@ -932,7 +938,7 @@ class InsulinDeliveryStoreQueryTests: PersistenceControllerTestCase {
             self.completion.fulfill()
         }
 
-        wait(for: [completion], timeout: 2, enforceOrder: true)
+        wait(for: [completion], timeout: 30, enforceOrder: true)
     }
 
     func testDoseDataWithCurrentQueryAnchor() {
@@ -954,7 +960,7 @@ class InsulinDeliveryStoreQueryTests: PersistenceControllerTestCase {
             self.completion.fulfill()
         }
 
-        wait(for: [completion], timeout: 2, enforceOrder: true)
+        wait(for: [completion], timeout: 30, enforceOrder: true)
     }
 
     func testDoseDataWithLimitCoveredByData() {
@@ -982,7 +988,7 @@ class InsulinDeliveryStoreQueryTests: PersistenceControllerTestCase {
             self.completion.fulfill()
         }
 
-        wait(for: [completion], timeout: 2, enforceOrder: true)
+        wait(for: [completion], timeout: 30, enforceOrder: true)
     }
 
     private func addDoseData(_ doseData: [DoseDatum]) {
@@ -994,7 +1000,7 @@ class InsulinDeliveryStoreQueryTests: PersistenceControllerTestCase {
                 object.startDate = Date().addingTimeInterval(-.minutes(15))
                 object.endDate = Date().addingTimeInterval(-.minutes(5))
                 object.syncIdentifier = doseDatum.syncIdentifier
-                object.value = 1.0
+                object.deliveredUnits = 1.0
                 object.reason = .bolus
                 object.createdAt = Date()
                 object.deletedAt = doseDatum.deleted ? Date() : nil

@@ -245,6 +245,9 @@ public protocol PumpManager: DeviceManager {
         glucoseTargets: [(TimeInterval, Double)]
     )
 
+    /// Records a carb entry for regression analysis by an on-device algorithm.
+    func recordCarbEntryForExternalAlgorithm(date: Date, grams: Double, absorptionTime: TimeInterval)
+
     /// Configures the CGM sensor identity for the pump's on-device algorithm.
     /// Called when a CGM manager is set up or changed so the pump can register
     /// the sensor during pod activation (e.g. Omnipod 5 CGM pairing).
@@ -298,6 +301,7 @@ public protocol PumpManager: DeviceManager {
 public extension PumpManager {
     var isExternalAlgorithmActive: Bool { return false }
     func updateLatestGlucoseForExternalAlgorithm(mgdl: Int, date: Date) { }
+    func recordCarbEntryForExternalAlgorithm(date: Date, grams: Double, absorptionTime: TimeInterval) { }
     func updateTherapySettingsForExternalAlgorithm(
         insulinSensitivities: [(TimeInterval, Double)],
         glucoseTargets: [(TimeInterval, Double)]

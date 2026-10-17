@@ -123,6 +123,10 @@ public protocol CGMManager: DeviceManager {
 
     var glucoseDisplay: GlucoseDisplayable? { get }
 
+    /// The sensor or transmitter identifier string (e.g. Dexcom transmitter ID, G7 sensor ID).
+    /// Used by pumps with on-device algorithms to register the CGM sensor.
+    var sensorIdentifier: String? { get }
+
     /// The current status of the cgm manager
     var cgmManagerStatus: CGMManagerStatus { get }
 
@@ -186,7 +190,9 @@ public extension CGMManager {
     var appURL: URL? {
         return nil
     }
-    
+
+    var sensorIdentifier: String? { return nil }
+
     /// Default is no delay to store samples in HealthKit
     static var healthKitStorageDelay: TimeInterval { 0 }
 

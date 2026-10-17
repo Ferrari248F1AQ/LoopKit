@@ -231,6 +231,14 @@ public protocol PumpManager: DeviceManager {
         glucoseTargets: [(TimeInterval, Double)]
     )
 
+    /// Configures the CGM sensor identity for the pump's on-device algorithm.
+    /// Called when a CGM manager is set up or changed so the pump can register
+    /// the sensor during pod activation (e.g. Omnipod 5 CGM pairing).
+    /// - Parameters:
+    ///   - cgmIdentifier: The CGM plugin identifier (e.g. "DexG5Transmitter", "com.apple.G7SensorKit")
+    ///   - transmitterId: The CGM transmitter/sensor ID string
+    func configureCgmForExternalAlgorithm(cgmIdentifier: String, transmitterId: String)
+
     /// Send a command to the pump to suspend delivery
     ///
     /// - Parameters:
@@ -280,6 +288,7 @@ public extension PumpManager {
         insulinSensitivities: [(TimeInterval, Double)],
         glucoseTargets: [(TimeInterval, Double)]
     ) { }
+    func configureCgmForExternalAlgorithm(cgmIdentifier: String, transmitterId: String) { }
 
     /// Default bridge for managers that only need the boolean "must provide a heartbeat" signal.
     func setBLEHeartbeatRequest(_ request: PumpHeartbeatRequest?) {

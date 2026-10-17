@@ -245,6 +245,10 @@ public protocol PumpManager: DeviceManager {
         glucoseTargets: [(TimeInterval, Double)]
     )
 
+    /// Forwards the carb ratio schedule to the pump for on-device algorithm regression.
+    /// carbRatios: array of (startTime in seconds from midnight, grams per unit)
+    func updateCarbRatioScheduleForExternalAlgorithm(carbRatios: [(TimeInterval, Double)])
+
     /// Records a carb entry for regression analysis by an on-device algorithm.
     func recordCarbEntryForExternalAlgorithm(date: Date, grams: Double, absorptionTime: TimeInterval)
 
@@ -302,6 +306,7 @@ public extension PumpManager {
     var isExternalAlgorithmActive: Bool { return false }
     func updateLatestGlucoseForExternalAlgorithm(mgdl: Int, date: Date) { }
     func recordCarbEntryForExternalAlgorithm(date: Date, grams: Double, absorptionTime: TimeInterval) { }
+    func updateCarbRatioScheduleForExternalAlgorithm(carbRatios: [(TimeInterval, Double)]) { }
     func updateTherapySettingsForExternalAlgorithm(
         insulinSensitivities: [(TimeInterval, Double)],
         glucoseTargets: [(TimeInterval, Double)]

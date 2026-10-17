@@ -71,6 +71,10 @@ public protocol PumpManagerDelegate: DeviceManagerDelegate, PumpManagerStatusObs
     
     func pumpManager(_ pumpManager: PumpManager, didRequestBasalRateScheduleChange basalRateSchedule: BasalRateSchedule, completion: @escaping (Error?) -> Void)
 
+    func pumpManager(_ pumpManager: PumpManager, didRequestInsulinSensitivityScheduleChange schedule: InsulinSensitivitySchedule, completion: @escaping (Error?) -> Void)
+
+    func pumpManager(_ pumpManager: PumpManager, didRequestCarbRatioScheduleChange schedule: CarbRatioSchedule, completion: @escaping (Error?) -> Void)
+
     func startDateToFilterNewPumpEvents(for manager: PumpManager) -> Date
 
     /// Indicates the system time offset from a trusted time source. If the return value is added to the system time, the result is the trusted time source value. If the trusted time source is earlier than the system time, the return value is negative.
@@ -78,6 +82,16 @@ public protocol PumpManagerDelegate: DeviceManagerDelegate, PumpManagerStatusObs
 
     /// Indicates if automatic dosing has been enabled
     var automaticDosingEnabled: Bool { get }
+}
+
+public extension PumpManagerDelegate {
+    func pumpManager(_ pumpManager: PumpManager, didRequestInsulinSensitivityScheduleChange schedule: InsulinSensitivitySchedule, completion: @escaping (Error?) -> Void) {
+        completion(nil)
+    }
+
+    func pumpManager(_ pumpManager: PumpManager, didRequestCarbRatioScheduleChange schedule: CarbRatioSchedule, completion: @escaping (Error?) -> Void) {
+        completion(nil)
+    }
 }
 
 

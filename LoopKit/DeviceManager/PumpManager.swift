@@ -245,6 +245,10 @@ public protocol PumpManager: DeviceManager {
         glucoseTargets: [(TimeInterval, Double)]
     )
 
+    /// Forwards the ISF schedule to the pump for on-device algorithm regression.
+    /// isfEntries: array of (startTime in seconds from midnight, mg/dL per unit)
+    func updateISFScheduleForExternalAlgorithm(isfEntries: [(TimeInterval, Double)])
+
     /// Forwards the carb ratio schedule to the pump for on-device algorithm regression.
     /// carbRatios: array of (startTime in seconds from midnight, grams per unit)
     func updateCarbRatioScheduleForExternalAlgorithm(carbRatios: [(TimeInterval, Double)])
@@ -306,6 +310,7 @@ public extension PumpManager {
     var isExternalAlgorithmActive: Bool { return false }
     func updateLatestGlucoseForExternalAlgorithm(mgdl: Int, date: Date) { }
     func recordCarbEntryForExternalAlgorithm(date: Date, grams: Double, absorptionTime: TimeInterval) { }
+    func updateISFScheduleForExternalAlgorithm(isfEntries: [(TimeInterval, Double)]) { }
     func updateCarbRatioScheduleForExternalAlgorithm(carbRatios: [(TimeInterval, Double)]) { }
     func updateTherapySettingsForExternalAlgorithm(
         insulinSensitivities: [(TimeInterval, Double)],

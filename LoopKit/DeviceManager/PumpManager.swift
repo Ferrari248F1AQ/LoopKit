@@ -235,7 +235,7 @@ public protocol PumpManager: DeviceManager {
     /// Called when a CGM manager is set up or changed so the pump can register
     /// the sensor during pod activation (e.g. Omnipod 5 CGM pairing).
     /// - Parameters:
-    ///   - cgmIdentifier: The CGM plugin identifier (e.g. "DexG5Transmitter", "com.apple.G7SensorKit")
+    ///   - cgmIdentifier: The CGM plugin identifier (e.g. "DexG5Transmitter", "G7CGMManager")
     ///   - transmitterId: The CGM transmitter/sensor ID string
     func configureCgmForExternalAlgorithm(cgmIdentifier: String, transmitterId: String)
 

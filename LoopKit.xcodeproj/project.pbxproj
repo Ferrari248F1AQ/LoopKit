@@ -39,6 +39,7 @@
 		1D1065E9282DC54700026A70 /* VideoPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1065E8282DC54700026A70 /* VideoPlayView.swift */; };
 		1D1438B825633E2100BE8F06 /* GlucoseTherapySettingInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1438B725633E2100BE8F06 /* GlucoseTherapySettingInformationView.swift */; };
 		1D1A019E24B678BF0077D86E /* TherapySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1A019D24B678BF0077D86E /* TherapySettingsView.swift */; };
+		FA0E000226D6FA0000000003 /* TherapyInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E000226D6FA0000000004 /* TherapyInsightsView.swift */; };
 		1D1FCE2324BD13A2000300A8 /* CorrectionRangeOverridesExpandableSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FCE2224BD13A2000300A8 /* CorrectionRangeOverridesExpandableSetting.swift */; };
 		1D1FCE2524BD42EF000300A8 /* TherapySettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FCE2424BD42EF000300A8 /* TherapySettingsViewModel.swift */; };
 		1D1FCE2724BE4DE2000300A8 /* CorrectionRangeOverrides.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D1FCE2624BE4DE2000300A8 /* CorrectionRangeOverrides.swift */; };
@@ -853,6 +854,7 @@
 		C1CEBFDB29BA9D8F007FD8A3 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187338629B9486200519CDF /* Data.swift */; };
 		C1CEBFDC29BA9D9D007FD8A3 /* NumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C187338429B9486200519CDF /* NumberFormatter.swift */; };
 		C1D476B92A8ED3E8002C1C87 /* LoopAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D476B62A8ED3E8002C1C87 /* LoopAlgorithm.swift */; };
+		FA0E000126D6FA0000000001 /* TherapyRegression.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0E000126D6FA0000000002 /* TherapyRegression.swift */; };
 		C1D476BA2A8ED3E8002C1C87 /* GlucosePredictionAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D476B72A8ED3E8002C1C87 /* GlucosePredictionAlgorithm.swift */; };
 		C1D476BB2A8ED3E8002C1C87 /* LoopPredictionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D476B82A8ED3E8002C1C87 /* LoopPredictionInput.swift */; };
 		C1D56376296B3F5E00BA15EC /* reservoir_for_iob_missing.json in Resources */ = {isa = PBXBuildFile; fileRef = C1D56375296B3F5E00BA15EC /* reservoir_for_iob_missing.json */; };
@@ -1120,6 +1122,7 @@
 		1D1065E8282DC54700026A70 /* VideoPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayView.swift; sourceTree = "<group>"; };
 		1D1438B725633E2100BE8F06 /* GlucoseTherapySettingInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseTherapySettingInformationView.swift; sourceTree = "<group>"; };
 		1D1A019D24B678BF0077D86E /* TherapySettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TherapySettingsView.swift; sourceTree = "<group>"; };
+		FA0E000226D6FA0000000004 /* TherapyInsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TherapyInsightsView.swift; sourceTree = "<group>"; };
 		1D1FCE2224BD13A2000300A8 /* CorrectionRangeOverridesExpandableSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeOverridesExpandableSetting.swift; sourceTree = "<group>"; };
 		1D1FCE2424BD42EF000300A8 /* TherapySettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TherapySettingsViewModel.swift; sourceTree = "<group>"; };
 		1D1FCE2624BE4DE2000300A8 /* CorrectionRangeOverrides.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionRangeOverrides.swift; sourceTree = "<group>"; };
@@ -1790,6 +1793,7 @@
 		C1CAB9E826A3254800A57273 /* StoredInsulinModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoredInsulinModel.swift; sourceTree = "<group>"; };
 		C1CBF61B1EEA2A1E001E4851 /* ice_1_hour_input.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ice_1_hour_input.json; sourceTree = "<group>"; };
 		C1D476B62A8ED3E8002C1C87 /* LoopAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopAlgorithm.swift; sourceTree = "<group>"; };
+		FA0E000126D6FA0000000002 /* TherapyRegression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TherapyRegression.swift; sourceTree = "<group>"; };
 		C1D476B72A8ED3E8002C1C87 /* GlucosePredictionAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlucosePredictionAlgorithm.swift; sourceTree = "<group>"; };
 		C1D476B82A8ED3E8002C1C87 /* LoopPredictionInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoopPredictionInput.swift; sourceTree = "<group>"; };
 		C1D56375296B3F5E00BA15EC /* reservoir_for_iob_missing.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reservoir_for_iob_missing.json; sourceTree = "<group>"; };
@@ -3136,6 +3140,7 @@
 				C13ACA0A2AC077F000F05D08 /* LoopAlgorithmSettings.swift */,
 				C1D476B82A8ED3E8002C1C87 /* LoopPredictionInput.swift */,
 				C13ACA0B2AC077F000F05D08 /* LoopPredictionOutput.swift */,
+				FA0E000126D6FA0000000002 /* TherapyRegression.swift */,
 			);
 			path = LoopAlgorithm;
 			sourceTree = "<group>";
@@ -3200,6 +3205,7 @@
 				C140E0512602908A000A4FF7 /* SettingsPresentationMode.swift */,
 				E96DCB5924AF74AC007117BC /* SuspendThresholdEditor.swift */,
 				1D1FCE2A24BE704A000300A8 /* TherapySetting+Settings.swift */,
+				FA0E000226D6FA0000000004 /* TherapyInsightsView.swift */,
 				1D1A019D24B678BF0077D86E /* TherapySettingsView.swift */,
 			);
 			path = "Settings Editors";
@@ -4055,6 +4061,7 @@
 				43BA7184201EE7090058961E /* TextFieldTableViewController.swift in Sources */,
 				1452F4B22A8521CD00F8B9E4 /* TextFieldRow.swift in Sources */,
 				1D1A019E24B678BF0077D86E /* TherapySettingsView.swift in Sources */,
+				FA0E000226D6FA0000000003 /* TherapyInsightsView.swift in Sources */,
 				E93C86A024C8F6E00073089B /* InsulinModelSelection.swift in Sources */,
 				895FE09122011F4800FCF18A /* AddEditOverrideTableViewController.swift in Sources */,
 				C1E4B305242E98E900E70CCB /* ProgressView.swift in Sources */,
@@ -4280,6 +4287,7 @@
 				1DC64C7E24BF6EBC004A63A1 /* DeliveryLimits.swift in Sources */,
 				C168CA7A280DD00F002BD2A7 /* Model.xcdatamodeld in Sources */,
 				C1D476B92A8ED3E8002C1C87 /* LoopAlgorithm.swift in Sources */,
+				FA0E000126D6FA0000000001 /* TherapyRegression.swift in Sources */,
 				4322B770202FA26F0002837D /* GlucoseStore.swift in Sources */,
 				C1814B8C226371DF008D2D8E /* WeakSynchronizedDelegate.swift in Sources */,
 				C187339129B9486200519CDF /* Data.swift in Sources */,
